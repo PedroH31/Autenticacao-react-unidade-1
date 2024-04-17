@@ -3,7 +3,7 @@ import React from 'react'
 
 function UserPage(){
     return (
-        <h1>USER PAGE</h1>
+        <h1 className="user-message">USER PAGE</h1>
     )
 }
 

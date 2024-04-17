@@ -6,16 +6,21 @@ import axios from 'axios'
 
 function UserCreation() {
     const [newUserFormData, setNewUserFormData] = useState({ email: "", password: "" })
-    const [userExists, setUserExists] = useState(false)
     const {userList, setUserList} = useContext(UserListContext)
+    const [error, setError] = useState(false)
+    const errorMessage = error? "Email already exists or invalid email" : ""
     const navigate = useNavigate()
 
-    function checkEmailExists() {
+    function emailExists() { // checa se o email existe no banco de dados
+        let exists = false
+
         userList.forEach(user => {
             if (user.email === newUserFormData.email) {
-                setUserExists(true)
+                exists = true
             }
         })
+
+        return exists
     }
 
     function handleChange(e) {
@@ -31,26 +36,28 @@ function UserCreation() {
         e.preventDefault()
 
         const apiUrl = "http://127.0.0.1:8000/api/users/create/"
-        checkEmailExists()
 
-        if (!userExists) {
+        if (newUserFormData.email !== "" && emailExists() === false) {
             axios.post(apiUrl, newUserFormData)
                 .then(response => {
                     setUserList(prevList => [...prevList, response.data])
-                    setUserExists(false)
-                    navigate("user-page")
                 })
                 .catch(error => {
                     console.error("Error creating user:", error)
                 })
+            setError(false)
+            navigate("/user-page")
         } else {
-              console.log("user already exists")
+            setError(true)
+            
         }
     }
 
     return (
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
+                <p className="error-message">{errorMessage}</p>
+                <label htmlFor="email">Username:</label>
                 <input
                     name="email"
                     onChange={handleChange}
@@ -58,6 +65,7 @@ function UserCreation() {
                     type="email"
                     value={newUserFormData.email}
                 />
+                <label htmlFor="password">Password:</label>
                 <input
                     name="password"
                     onChange={handleChange}
@@ -65,7 +73,7 @@ function UserCreation() {
                     type="password"
                     value={newUserFormData.password}
                 />
-                <button type="submit">Create user</button>
+                <button type="submit" className="form-button">Create user</button>
             </form>
         </div>
     )
