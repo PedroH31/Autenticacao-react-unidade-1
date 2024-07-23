@@ -9,11 +9,13 @@ body {
   background: url("./assets/background-image.jpg");
 }
 
+/* forms */
+
 .login-form {
   display: flex;
   flex-direction: column;
   max-width: 22em;
-  margin: 18em auto;
+  margin: 8em auto;
   padding: 5em 2em 3em;
   border-radius: 10px;
   box-shadow: 0 0 10px 5px rgba(0,0,0,0.8); 
@@ -27,8 +29,9 @@ input {
 }
 
 .form-button {
+  display: block;
   width: 8em;
-  margin: 0.5em auto;
+  margin: 0 auto;
   padding: 0.5em 2em;
   border-radius: 15px;
   border: none;
@@ -37,6 +40,13 @@ input {
   font-weight: bold;
   font-size: 1rem;
 }
+
+.close-form {
+  display: inline;
+  margin: 0 0 0 auto;
+}
+
+/* login */
 
 .login-options {
   color: #662eed;
@@ -53,9 +63,41 @@ input {
   text-align: center;
 }
 
-.user-message {
+.page-title {
   text-align: center;
   color: white;
-  margin: 12em auto;
+  margin: 2em auto;
 
 }
+
+/* user page */
+
+.product-list-container {
+  margin: 0 auto;
+  width: 30em
+}
+
+.product-container {
+  display: flex;
+  border-radius: 10px;
+  background-color: white;
+  padding: 0.5em;
+}
+
+.product {
+  margin: 0.5em auto;
+  list-style-type: none;
+  color: red;
+}
+
+/* icons */
+
+.icon {
+  padding: 0.5em;
+  width: 2em;
+  font-size: 1rem;
+  border-radius: 10px;
+  color: white;
+}
+
+

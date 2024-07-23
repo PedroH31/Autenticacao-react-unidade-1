@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage'
 import UserCreation from './components/UserCreation'
 import UserStateProvider from './components/UserStateProvider'
 import UserPage from './components/UserPage'
+import Dashboard from './pages/user/Dashboard'
 import './index.css'
 
 
@@ -17,9 +18,13 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginPage />}/>
                 <Route path="create" element={<UserCreation />} />
-                <Route path="user-page" element={<UserPage />}/>
+
+                <Route path="user-page" element={<UserPage />}>
+                  <Route index element={<Dashboard />}></Route>
+                </Route>
             </Routes>
         </UserStateProvider>
+        
     </BrowserRouter>
   )
 }
@@ -27,3 +32,4 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
 )
+
