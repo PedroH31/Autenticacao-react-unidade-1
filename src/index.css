@@ -31,7 +31,7 @@ input {
 .form-button {
   display: block;
   width: 8em;
-  margin: 0 auto;
+  margin: 1em auto 0;
   padding: 0.5em 2em;
   border-radius: 15px;
   border: none;
@@ -44,6 +44,8 @@ input {
 .close-form {
   display: inline;
   margin: 0 0 0 auto;
+  width: 2em;
+  padding: 0.5em;
 }
 
 /* login */
@@ -74,7 +76,7 @@ input {
 
 .product-list-container {
   margin: 0 auto;
-  width: 30em
+  width: 35em
 }
 
 .product-container {
@@ -90,6 +92,14 @@ input {
   color: red;
 }
 
+.product-button {
+  width: 2em;
+  height: 2em;
+  padding: 0.5em;
+  border-radius: 10px;;
+  margin: 1.2em 0.2em 0;
+}
+
 /* icons */
 
 .icon {
@@ -100,4 +110,15 @@ input {
   color: white;
 }
 
+.form-input {
+  width: 10em
+}
 
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: red;
+}

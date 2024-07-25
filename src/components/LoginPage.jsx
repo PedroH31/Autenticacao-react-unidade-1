@@ -1,14 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import client from '../client'
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-axios.defaults.withCredentials = true
-
-const client = axios.create({
-    baseURL: "http://127.0.0.1:8000"
-})
 
 function LoginPage() {
     const [loginFormData, setLoginFormData] = useState({ email: "", password: "" })
@@ -31,15 +24,18 @@ function LoginPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        client.post("/api/login/", loginFormData)
-        .then(res => {
-            setWrongCredentials(false)
-            navigate("/user-page");
-        })
-        .catch(error => {
-            console.error("Login error:", error);
-            setWrongCredentials(true);
-        });
+    
+        client.post('/api/login/', loginFormData)
+            .then(res => {
+                localStorage.setItem('userId', res.data.user_id)
+                setWrongCredentials(false);
+                navigate('/user-page')
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                setWrongCredentials(true)
+            })
+        
     }
 
 

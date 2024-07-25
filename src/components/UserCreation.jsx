@@ -1,14 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-axios.defaults.withCredentials = true
-
-const client = axios.create({
-    baseURL: "http://127.0.0.1:8000"
-})
+import client from '../client'
 
 
 function UserCreation() {
@@ -17,12 +9,9 @@ function UserCreation() {
         username: "", 
         password: "" 
     })
-    const [currentUser, setCurrentUser] = useState(false)
     const [error, setError] = useState(false)
     const errorMessage = error? "Email already exists or invalid email" : ""
     const navigate = useNavigate()
-
-
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -35,31 +24,19 @@ function UserCreation() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        try {
-            client.post("/api/register/",
-                {
+        client.post("/api/register/", newUserFormData)
+            .then(() => {
+                client.post("/api/login/", {
                     email: newUserFormData.email,
-                    username: newUserFormData.username,
                     password: newUserFormData.password
-                }
-            ).then((res) => {
-                client.post(
-                    "/api/login/",
-                    {
-                        email: newUserFormData.email,
-                        password: newUserFormData.password
-                    }
-                )
-            }).then(res => {
-                setCurrentUser(true)
-                setError(false)
-                navigate("/user-page")
+                }).then(() => {
+                    setError(false)
+                    navigate("/user-page");
+                });
             })
-        } catch (error) {
-            console.error("could not log in", error)
-            setError(true)
-        }
-        
+            .catch(() => {
+                setError(true);
+            });
     }
 
     return (
